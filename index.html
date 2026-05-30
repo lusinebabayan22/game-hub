@@ -14,15 +14,11 @@ body {
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 25px;
+  padding: 15px;
   background: #111;
-}
-
-.logo {
-  color: #00ff99;
+  text-align: center;
   font-weight: bold;
+  color: #00ff99;
 }
 
 .hero {
@@ -31,8 +27,8 @@ header {
 }
 
 .hero h1 {
-  color: #00ff99;
   font-size: 42px;
+  color: #00ff99;
 }
 
 section {
@@ -49,8 +45,8 @@ input, select, button {
 
 button {
   background: #00ff99;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .grid {
@@ -85,24 +81,21 @@ button {
 #qr {
   margin-top: 15px;
 }
-
-.admin {
-  padding: 20px;
-  background: #0f0f0f;
-}
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">🎮 Game Hub</div>
-</header>
+<header>🎮 Game Hub Computer Club</header>
 
-<!-- MAIN APP -->
+<!-- HERO -->
+<div class="hero">
+  <h1>Book Your Gaming PC Online</h1>
+  <p>Real-time booking system</p>
+</div>
+
+<!-- BOOKING -->
 <section>
-
-<h1 class="hero">Game Hub Booking System</h1>
 
 <input id="name" placeholder="Your name">
 
@@ -115,22 +108,22 @@ button {
   <option>16:00-18:00</option>
 </select>
 
-<button onclick="bookPC()">Book PC</button>
+<button onclick="bookPC()">Book Now</button>
 
 <div id="qr"></div>
 
-<h2>Live PCs</h2>
-<div class="grid" id="pcGrid"></div>
-
-<h2>Bookings</h2>
-<div id="list"></div>
-
 </section>
 
-<!-- ADMIN (NO LOGIN, ALWAYS VISIBLE) -->
-<section class="admin">
-  <h2>ADMIN PANEL</h2>
-  <div id="adminList"></div>
+<!-- LIVE STATUS -->
+<section>
+<h2>Live PC Status</h2>
+<div class="grid" id="pcGrid"></div>
+</section>
+
+<!-- BOOKINGS LIST (PUBLIC VIEW) -->
+<section>
+<h2>Current Bookings</h2>
+<div id="list"></div>
 </section>
 
 <!-- QR LIB -->
@@ -152,7 +145,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* 🔥 FIREBASE CONFIG */
+/* 🔥 YOUR FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -183,7 +176,7 @@ window.bookPC = async function(){
   const snap = await getDocs(q);
 
   if(!snap.empty){
-    alert("❌ Already booked");
+    alert("❌ This PC is already booked!");
     return;
   }
 
@@ -210,17 +203,15 @@ function generateQR(id){
   });
 }
 
-/* ================= LIVE SYNC ================= */
+/* ================= LIVE SYSTEM ================= */
 
 onSnapshot(bookingsRef,(snap)=>{
 
   const list = document.getElementById("list");
-  const adminList = document.getElementById("adminList");
   const grid = document.getElementById("pcGrid");
   const select = document.getElementById("pcSelect");
 
   list.innerHTML = "";
-  adminList.innerHTML = "";
   grid.innerHTML = "";
   select.innerHTML = "";
 
@@ -233,13 +224,6 @@ onSnapshot(bookingsRef,(snap)=>{
     list.innerHTML += `
       <div class="card">
         ${data.name} | ${data.pc} | ${data.time}
-      </div>
-    `;
-
-    adminList.innerHTML += `
-      <div class="card">
-        <b>${data.name}</b> - ${data.pc} - ${data.time}
-        <br><button onclick="del('${d.id}')">Delete</button>
       </div>
     `;
   });
@@ -258,17 +242,7 @@ onSnapshot(bookingsRef,(snap)=>{
 
 });
 
-/* ================= DELETE ================= */
-
-window.del = async function(id){
-  await deleteDoc(doc(db,"bookings",id));
-};
-
 </script>
 
 </body>
 </html>
- 
-
-
-
