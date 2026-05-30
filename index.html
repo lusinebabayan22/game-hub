@@ -13,33 +13,30 @@ body {
   color: white;
 }
 
-/* ================= NAVBAR ================= */
+/* ===== NAVBAR ===== */
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(10,10,25,0.6);
+  background: rgba(10,10,25,0.7);
   backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
+  border-bottom: 1px solid rgba(168,85,247,0.2);
   z-index: 1000;
-  border-bottom: 1px solid rgba(138, 43, 226, 0.2);
 }
 
 .logo {
   font-weight: bold;
-  font-size: 18px;
   color: #a855f7;
-  letter-spacing: 2px;
 }
 
-/* ================= MENU ================= */
+/* MENU */
 nav {
   display: flex;
-  gap: 18px;
-  align-items: center;
+  gap: 15px;
 }
 
 nav a {
@@ -47,37 +44,24 @@ nav a {
   text-decoration: none;
   font-size: 14px;
   transition: 0.3s;
-  padding: 6px 10px;
-  border-radius: 6px;
 }
 
 nav a:hover {
-  background: rgba(168,85,247,0.2);
   color: #a855f7;
 }
 
-/* ================= LANGUAGE ================= */
-.lang {
-  display: flex;
-  gap: 6px;
-}
-
-.lang button {
-  background: #12122a;
-  border: 1px solid #2a2a55;
+/* LANGUAGE BUTTON */
+.lang-btn {
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  border: none;
   color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
 }
 
-.lang button:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
-}
-
-/* ================= HERO ================= */
+/* ===== HERO ===== */
 .hero {
   height: 100vh;
   display: flex;
@@ -85,48 +69,42 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
   background: radial-gradient(circle at center, #1a1033, #050510);
+  padding: 20px;
 }
 
 .hero h1 {
   font-size: 60px;
-  margin: 0;
   color: #a855f7;
-  text-shadow: 0 0 25px rgba(168,85,247,0.4);
 }
 
 .hero p {
   max-width: 600px;
   opacity: 0.8;
-  margin-top: 15px;
 }
 
-/* BUTTON */
 .btn {
   margin-top: 20px;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  background: #3b82f6;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
-  font-weight: bold;
 }
 
 .btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(168,85,247,0.5);
+  background: #a855f7;
 }
 
-/* ================= SECTIONS ================= */
+/* SECTIONS */
 section {
   padding: 90px 20px;
   text-align: center;
 }
 
-/* ================= CARDS ================= */
+/* CARDS */
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -135,52 +113,37 @@ section {
 }
 
 .card {
-  background: rgba(18,18,42,0.8);
-  border: 1px solid rgba(168,85,247,0.2);
+  background: #12122a;
+  border: 1px solid #24244a;
   padding: 20px;
   border-radius: 12px;
   width: 200px;
-  transition: 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-8px);
-  border-color: #a855f7;
-  box-shadow: 0 0 20px rgba(59,130,246,0.2);
-}
-
-/* ================= GALLERY ================= */
+/* GALLERY */
 img {
   width: 250px;
   margin: 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(168,85,247,0.2);
-  transition: 0.3s;
+  border-radius: 10px;
+  border: 1px solid #2a2a55;
 }
 
-img:hover {
-  transform: scale(1.05);
-}
-
-/* ================= FOOTER ================= */
+/* FOOTER */
 footer {
   text-align: center;
   padding: 30px;
   background: #0a0a18;
   opacity: 0.7;
-  border-top: 1px solid rgba(168,85,247,0.2);
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <header>
-
   <div class="logo">🎮 GAME HUB</div>
 
-  <!-- MENU -->
   <nav>
     <a href="#">Home</a>
     <a href="#features">Features</a>
@@ -188,20 +151,15 @@ footer {
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- LANGUAGE -->
-  <div class="lang">
-    <button onclick="setLang('en')">EN</button>
-    <button onclick="setLang('hy')">HY</button>
-    <button onclick="setLang('ru')">RU</button>
-  </div>
-
+  <!-- ONE BUTTON LANGUAGE SWITCH -->
+  <button class="lang-btn" onclick="switchLang()">EN</button>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <h1 id="title">Game Hub Premium Club</h1>
   <p id="desc">High-end gaming PCs, esports environment, and ultra-fast experience.</p>
-  <button class="btn" id="btn" onclick="go()">Book Now</button>
+  <button class="btn" id="btn">Book Now</button>
 </section>
 
 <!-- FEATURES -->
@@ -225,12 +183,16 @@ footer {
   <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
 </section>
 
-<!-- FOOTER -->
 <footer id="footer">
   © 2026 Game Hub
 </footer>
 
 <script>
+
+let langIndex = 0; // 0=en, 1=hy, 2=ru
+
+const langs = ["en","hy","ru"];
+
 const texts = {
   en: {
     title: "Game Hub Premium Club",
@@ -272,7 +234,7 @@ const texts = {
   }
 };
 
-function setLang(lang){
+function applyLang(lang){
   document.getElementById("title").innerText = texts[lang].title;
   document.getElementById("desc").innerText = texts[lang].desc;
   document.getElementById("btn").innerText = texts[lang].btn;
@@ -285,11 +247,17 @@ function setLang(lang){
 
   document.getElementById("gtitle").innerText = texts[lang].gtitle;
   document.getElementById("footer").innerText = texts[lang].footer;
+
+  document.querySelector(".lang-btn").innerText = lang.toUpperCase();
 }
 
-function go(){
-  alert("Next step: connect booking page or Firebase");
+function switchLang(){
+  langIndex = (langIndex + 1) % 3;
+  applyLang(langs[langIndex]);
 }
+
+applyLang("en");
+
 </script>
 
 </body>
