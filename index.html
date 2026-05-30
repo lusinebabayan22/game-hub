@@ -1,1 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub PRO System</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b0b0f;
+  color: white;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #111;
+}
+
+button, input, select {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #00ff99;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+section {
+  padding: 20px;
+  text-align: center;
+}
+
+.card {
+  background: #151515;
+  padding: 10px;
+  margin: 8px;
+  border-radius: 10px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pc {
+  width: 120px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #222;
+}
+
+.available { border: 2px solid #00ff99; }
+.busy { border: 2px solid red; }
+
+.admin {
+  display: none;
+  padding: 20px;
+  background: #0f0f0f;
+}
+
+#qr {
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>🎮 Game Hub PRO</div>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<!-- LOGIN -->
+<section id="login">
+  <h2>Admin Login</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</section>
+
+<!-- BOOKING SYSTEM -->
+<section id="app" style="display:none;">
+
+<h2>PC Booking System</h2>
+
+<input id="name" placeholder="Your name">
+
+<select id="pcSelect"></select>
+
+<select id="time">
+  <option>10:00-12:00</option>
+  <option>12:00-14:00</option>
+  <option>14:00-16:00</option>
+  <option>16:00-18:00</option>
+</select>
+
+<button onclick="book()">Book PC</button>
+
+<h2>Live PCs</h2>
+<div class="grid" id="pcGrid"></div>
+
+<h2>Bookings</h2>
+<div id="list"></div>
+
+<div id="qr"></div>
+
+</section>
+
+<!-- ADMIN -->
+<section class="admin" id="adminPanel">
+  <h2>ADMIN DASHBOARD</h2>
+  <div id="adminList"></div>
+</section>
+
+<!-- QR LIB -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const bookingsRef = collection(db, "bookings");
+
+/* ================= AUTH ================= */
+
+window.login = async function(){
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+
+  await signInWithEmailAndPassword(auth, email, pass);
+};
+
+window.logout = function(){
+  signOut(auth);
+};
+
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    document.getElementById("adminPanel").style.display="block";
+  } else {
+    document.getElementById("login").style.display="block";
+    document.getElementById("app").style.display="none";
+    document.getElementById("adminPanel").style.display="none";
+  }
+});
+
+/* ================= PCS ================= */
+
+const pcs = Array.from({length:10},(_,i)=>`PC ${i+1}`);
+
+function renderPCs(bookings){
+  const grid = document.getElementById("pcGrid");
+  const select = document.getElementById("pcSelect");
+
+  grid.innerHTML="";
+  select.innerHTML="";
+
+  pcs.forEach(pc=>{
+    const isBusy = bookings.some(b=>b.pc===pc);
+
+    grid.innerHTML += `
+      <div class="pc ${isBusy?'busy':'available'}">
+        ${pc}
+      </div>
+    `;
+
+    if(!isBusy){
+      select.innerHTML += `<option>${pc}</option>`;
+    }
+  });
+}
+
+/* ================= BOOK ================= */
+
+window.book = async function(){
+
+  const name = document.getElementById("name").value;
+  const pc = document.getElementById("pcSelect").value;
+  const time = document.getElementById("time").value;
+
+  if(!name) return alert("Enter name");
+
+  const q = query(bookingsRef, where("pc","==",pc), where("time","==",time));
+  const snap = await getDocs(q);
+
+  if(!snap.empty){
+    alert("PC already booked!");
+    return;
+  }
+
+  const docRef = await addDoc(bookingsRef,{
+    name, pc, time, created:Date.now()
+  });
+
+  generateQR(docRef.id);
+};
+
+/* ================= QR ================= */
+
+function generateQR(id){
+  const qrDiv = document.getElementById("qr");
+  qrDiv.innerHTML="";
+
+  QRCode.toCanvas(document.createElement("canvas"),
+  "BOOKING_ID:"+id,
+  function (err, canvas) {
+    qrDiv.appendChild(canvas);
+  });
+}
+
+/* ================= LIVE ================= */
+
+onSnapshot(bookingsRef,(snap)=>{
+  let list = document.getElementById("list");
+  let admin = document.getElementById("adminList");
+
+  let all = [];
+
+  list.innerHTML="";
+  admin.innerHTML="";
+
+  snap.forEach(d=>{
+    let data = d.data();
+    all.push(data);
+
+    list.innerHTML += `
+      <div class="card">
+        ${data.name} | ${data.pc} | ${data.time}
+      </div>
+    `;
+
+    admin.innerHTML += `
+      <div class="card">
+        <b>${data.name}</b> ${data.pc} ${data.time}
+        <br><button onclick="del('${d.id}')">Delete</button>
+      </div>
+    `;
+  });
+
+  renderPCs(all);
+});
+
+/* ================= DELETE ================= */
+
+window.del = async function(id){
+  await deleteDoc(doc(db,"bookings",id));
+};
+
+</script>
+
+</body>
+</html>
