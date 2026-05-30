@@ -1,151 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub Computer Club</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0b0b0f;
-  color: white;
-}
-
-header {
-  padding: 15px;
-  background: #111;
-  text-align: center;
-  font-weight: bold;
-  color: #00ff99;
-}
-
-.hero {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.hero h1 {
-  font-size: 42px;
-  color: #00ff99;
-}
-
-section {
-  padding: 20px;
-  text-align: center;
-}
-
-input, select, button {
-  padding: 10px;
-  margin: 5px;
-  border-radius: 6px;
-  border: none;
-}
-
-button {
-  background: #00ff99;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.pc {
-  width: 110px;
-  padding: 10px;
-  border-radius: 10px;
-  background: #222;
-}
-
-.free {
-  border: 2px solid #00ff99;
-}
-
-.busy {
-  border: 2px solid red;
-}
-
-.card {
-  background: #151515;
-  padding: 10px;
-  margin: 8px;
-  border-radius: 10px;
-}
-
-#qr {
-  margin-top: 15px;
-}
-</style>
-</head>
-
-<body>
-
-<header>🎮 Game Hub Computer Club</header>
-
-<!-- HERO -->
-<div class="hero">
-  <h1>Book Your Gaming PC Online</h1>
-  <p>Real-time booking system</p>
-</div>
-
-<!-- BOOKING -->
-<section>
-
-<input id="name" placeholder="Your name">
-
-<select id="pcSelect"></select>
-
-<select id="timeSelect">
-  <option>10:00-12:00</option>
-  <option>12:00-14:00</option>
-  <option>14:00-16:00</option>
-  <option>16:00-18:00</option>
-</select>
-
-<button onclick="bookPC()">Book Now</button>
-
-<div id="qr"></div>
-
-</section>
-
-<!-- LIVE STATUS -->
-<section>
-<h2>Live PC Status</h2>
-<div class="grid" id="pcGrid"></div>
-</section>
-
-<!-- BOOKINGS LIST (PUBLIC VIEW) -->
-<section>
-<h2>Current Bookings</h2>
-<div id="list"></div>
-</section>
-
-<!-- QR LIB -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
-<!-- FIREBASE -->
-<script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
   collection,
   addDoc,
-  deleteDoc,
-  doc,
   onSnapshot,
   query,
   where,
-  getDocs
+  getDocs,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* 🔥 YOUR FIREBASE CONFIG */
+/* 🔥 FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -158,91 +24,101 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const bookingsRef = collection(db, "bookings");
+const ref = collection(db,"bookings");
 
-const pcs = Array.from({length:10},(_,i)=>`PC ${i+1}`);
+const pcs = ["PC 1","PC 2","PC 3","PC 4","PC 5","PC 6","PC 7","PC 8","PC 9","PC 10"];
+
+/* ================= ADMIN HIDDEN SYSTEM ================= */
+
+const ADMIN_KEY = "ROOT123"; // 🔐 change this
+
+function isAdmin(){
+  const hash = window.location.hash;
+  return hash.includes(ADMIN_KEY);
+}
+
+/* SHOW ADMIN PANEL ONLY IF KEY EXISTS */
+window.addEventListener("load",()=>{
+  if(isAdmin()){
+    document.getElementById("adminPanel").style.display="block";
+  }
+});
 
 /* ================= BOOK ================= */
 
-window.bookPC = async function(){
+window.book = async function(){
 
   const name = document.getElementById("name").value;
-  const pc = document.getElementById("pcSelect").value;
-  const time = document.getElementById("timeSelect").value;
+  const pc = document.getElementById("pc").value;
+  const time = document.getElementById("time").value;
 
   if(!name) return alert("Enter name");
 
-  const q = query(bookingsRef, where("pc","==",pc), where("time","==",time));
+  const q = query(ref, where("pc","==",pc), where("time","==",time));
   const snap = await getDocs(q);
 
   if(!snap.empty){
-    alert("❌ This PC is already booked!");
+    alert("Already booked!");
     return;
   }
 
-  const docRef = await addDoc(bookingsRef,{
-    name,
-    pc,
-    time,
-    created: Date.now()
-  });
-
-  generateQR(docRef.id);
+  await addDoc(ref,{name,pc,time});
 };
 
-/* ================= QR ================= */
+/* ================= LIVE ================= */
 
-function generateQR(id){
-  const qrDiv = document.getElementById("qr");
-  qrDiv.innerHTML = "";
-
-  QRCode.toCanvas(document.createElement("canvas"),
-  "BOOKING:" + id,
-  function (err, canvas) {
-    qrDiv.appendChild(canvas);
-  });
-}
-
-/* ================= LIVE SYSTEM ================= */
-
-onSnapshot(bookingsRef,(snap)=>{
+onSnapshot(ref,(snap)=>{
 
   const list = document.getElementById("list");
-  const grid = document.getElementById("pcGrid");
-  const select = document.getElementById("pcSelect");
+  const pcsDiv = document.getElementById("pcs");
+  const select = document.getElementById("pc");
+  const adminList = document.getElementById("adminList");
 
-  list.innerHTML = "";
-  grid.innerHTML = "";
-  select.innerHTML = "";
+  list.innerHTML="";
+  pcsDiv.innerHTML="";
+  select.innerHTML="";
+  adminList.innerHTML="";
 
-  let active = [];
+  let used=[];
 
   snap.forEach(d=>{
-    let data = d.data();
-    active.push(data);
+    let data=d.data();
+    used.push(data);
 
+    /* USER VIEW */
     list.innerHTML += `
-      <div class="card">
-        ${data.name} | ${data.pc} | ${data.time}
-      </div>
+      <div class="card">${data.name} | ${data.pc} | ${data.time}</div>
     `;
+
+    /* ADMIN VIEW */
+    if(isAdmin()){
+      adminList.innerHTML += `
+        <div class="card">
+          ${data.name} | ${data.pc} | ${data.time}
+          <br>
+          <button onclick="del('${d.id}')">Delete</button>
+        </div>
+      `;
+    }
   });
 
-  pcs.forEach(pc=>{
-    const busy = active.some(b=>b.pc===pc);
+  pcs.forEach(p=>{
+    const busy = used.some(b=>b.pc===p);
 
-    grid.innerHTML += `
-      <div class="pc ${busy?'busy':'free'}">${pc}</div>
+    pcsDiv.innerHTML += `
+      <div class="card">${p} ${busy?"🔴":"🟢"}</div>
     `;
 
     if(!busy){
-      select.innerHTML += `<option>${pc}</option>`;
+      select.innerHTML += `<option>${p}</option>`;
     }
   });
 
 });
 
-</script>
+/* ================= DELETE (ADMIN ONLY) ================= */
 
-</body>
-</html>
+window.del = async function(id){
+  if(!isAdmin()) return alert("No access");
+  await deleteDoc(doc(db,"bookings",id));
+};
