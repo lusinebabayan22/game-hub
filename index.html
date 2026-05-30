@@ -13,39 +13,33 @@ body {
   color: white;
 }
 
-/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
   padding: 15px 25px;
   background: #111;
-  position: sticky;
-  top: 0;
 }
 
 .logo {
-  font-weight: bold;
   color: #00ff99;
+  font-weight: bold;
 }
 
-/* HERO */
 .hero {
   text-align: center;
   padding: 40px 20px;
 }
 
 .hero h1 {
-  font-size: 42px;
   color: #00ff99;
+  font-size: 42px;
 }
 
-/* SECTION */
 section {
   padding: 20px;
   text-align: center;
 }
 
-/* INPUTS */
 input, select, button {
   padding: 10px;
   margin: 5px;
@@ -59,7 +53,6 @@ button {
   cursor: pointer;
 }
 
-/* GRID */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -67,7 +60,6 @@ button {
   gap: 10px;
 }
 
-/* PC BOX */
 .pc {
   width: 110px;
   padding: 10px;
@@ -83,7 +75,6 @@ button {
   border: 2px solid red;
 }
 
-/* CARD */
 .card {
   background: #151515;
   padding: 10px;
@@ -91,22 +82,13 @@ button {
   border-radius: 10px;
 }
 
-/* ADMIN */
-.admin {
-  display: none;
-  padding: 20px;
-  background: #0f0f0f;
-}
-
-/* LOGIN */
-#login {
-  text-align: center;
-  padding: 30px;
-}
-
-/* QR */
 #qr {
   margin-top: 15px;
+}
+
+.admin {
+  padding: 20px;
+  background: #0f0f0f;
 }
 </style>
 </head>
@@ -117,20 +99,11 @@ button {
   <div class="logo">🎮 Game Hub</div>
 </header>
 
-<!-- LOGIN -->
-<section id="login">
-  <h2>Admin Login</h2>
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-</section>
-
 <!-- MAIN APP -->
-<section id="app" style="display:none;">
+<section>
 
 <h1 class="hero">Game Hub Booking System</h1>
 
-<!-- BOOK -->
 <input id="name" placeholder="Your name">
 
 <select id="pcSelect"></select>
@@ -154,14 +127,13 @@ button {
 
 </section>
 
-<!-- ADMIN -->
-<section class="admin" id="admin">
-  <h2>ADMIN DASHBOARD</h2>
+<!-- ADMIN (NO LOGIN, ALWAYS VISIBLE) -->
+<section class="admin">
+  <h2>ADMIN PANEL</h2>
   <div id="adminList"></div>
-  <button onclick="logout()">Logout</button>
 </section>
 
-<!-- QR -->
+<!-- QR LIB -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 <!-- FIREBASE -->
@@ -180,14 +152,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-/* 🔥 YOUR FIREBASE CONFIG */
+/* 🔥 FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -199,37 +164,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
 const bookingsRef = collection(db, "bookings");
 
 const pcs = Array.from({length:10},(_,i)=>`PC ${i+1}`);
-
-/* ================= AUTH ================= */
-
-window.login = async function(){
-  await signInWithEmailAndPassword(
-    auth,
-    email.value,
-    password.value
-  );
-};
-
-window.logout = function(){
-  signOut(auth);
-};
-
-onAuthStateChanged(auth,(user)=>{
-  if(user){
-    login.style.display="none";
-    appDiv.style.display="block";
-    admin.style.display="block";
-  } else {
-    login.style.display="block";
-    appDiv.style.display="none";
-    admin.style.display="none";
-  }
-});
 
 /* ================= BOOK ================= */
 
@@ -250,7 +188,10 @@ window.bookPC = async function(){
   }
 
   const docRef = await addDoc(bookingsRef,{
-    name, pc, time, created:Date.now()
+    name,
+    pc,
+    time,
+    created: Date.now()
   });
 
   generateQR(docRef.id);
@@ -260,16 +201,16 @@ window.bookPC = async function(){
 
 function generateQR(id){
   const qrDiv = document.getElementById("qr");
-  qrDiv.innerHTML="";
+  qrDiv.innerHTML = "";
 
   QRCode.toCanvas(document.createElement("canvas"),
-  "BOOKING:"+id,
+  "BOOKING:" + id,
   function (err, canvas) {
     qrDiv.appendChild(canvas);
   });
 }
 
-/* ================= LIVE ================= */
+/* ================= LIVE SYNC ================= */
 
 onSnapshot(bookingsRef,(snap)=>{
 
@@ -278,10 +219,10 @@ onSnapshot(bookingsRef,(snap)=>{
   const grid = document.getElementById("pcGrid");
   const select = document.getElementById("pcSelect");
 
-  list.innerHTML="";
-  adminList.innerHTML="";
-  grid.innerHTML="";
-  select.innerHTML="";
+  list.innerHTML = "";
+  adminList.innerHTML = "";
+  grid.innerHTML = "";
+  select.innerHTML = "";
 
   let active = [];
 
@@ -297,7 +238,7 @@ onSnapshot(bookingsRef,(snap)=>{
 
     adminList.innerHTML += `
       <div class="card">
-        ${data.name} ${data.pc} ${data.time}
+        <b>${data.name}</b> - ${data.pc} - ${data.time}
         <br><button onclick="del('${d.id}')">Delete</button>
       </div>
     `;
@@ -327,3 +268,7 @@ window.del = async function(id){
 
 </body>
 </html>
+ 
+
+
+
