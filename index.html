@@ -1,207 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub Cyber Ultra</title>
+<title>Game Hub</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
-
-body {
-  margin: 0;
-  font-family: 'Orbitron', Arial;
-  background: radial-gradient(circle at top, #120a2a, #050510);
-  color: white;
-  overflow-x: hidden;
+body{
+  margin:0;
+  font-family:Arial;
+  background:radial-gradient(circle at top,#1a0033,#0a0014);
+  color:white;
 }
 
-/* ================= HEADER ================= */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 30px;
-  background: rgba(10,10,25,0.55);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(168,85,247,0.25);
-  z-index: 1000;
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:rgba(18,0,34,0.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid #2a004d;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
-.logo {
-  font-weight: 800;
-  color: #a855f7;
-  letter-spacing: 2px;
-  text-shadow: 0 0 15px rgba(168,85,247,0.6);
+.logo{
+  color:#c77dff;
+  font-weight:bold;
+  font-size:18px;
+  letter-spacing:2px;
 }
 
-/* NAV */
-nav {
-  display: flex;
-  gap: 18px;
+nav a{
+  color:white;
+  margin:0 10px;
+  text-decoration:none;
+  font-size:14px;
+  transition:0.3s;
 }
 
-nav a {
-  color: #cbd5e1;
-  text-decoration: none;
-  font-size: 13px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: 0.3s;
+nav a:hover{color:#c77dff;}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:120px 20px;
 }
 
-nav a:hover {
-  background: rgba(59,130,246,0.15);
-  color: #3b82f6;
-  box-shadow: 0 0 10px rgba(59,130,246,0.3);
+.hero h1{
+  font-size:72px;
+  color:#c77dff;
+  margin:0;
+  text-shadow:0 0 20px rgba(199,125,255,0.5);
 }
 
-/* LANGUAGE */
-.lang button {
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
-  border: none;
-  color: white;
-  padding: 7px 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(168,85,247,0.3);
+.hero p{
+  max-width:700px;
+  margin:15px auto;
+  opacity:0.8;
+  font-size:18px;
 }
 
-/* ================= HERO ================= */
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+/* BUTTON STYLE */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 20px;
+  background:#7b2cbf;
+  color:white;
+  border-radius:10px;
+  text-decoration:none;
+  transition:0.3s;
 }
 
-.hero h1 {
-  font-size: 64px;
-  margin: 0;
-  color: #a855f7;
-  text-shadow: 0 0 25px rgba(168,85,247,0.7);
+.btn:hover{
+  background:#9d4edd;
+  transform:scale(1.05);
 }
 
-.hero p {
-  max-width: 650px;
-  opacity: 0.85;
-  margin-top: 10px;
+/* SECTIONS */
+.section{
+  padding:70px 20px;
+  max-width:1100px;
+  margin:auto;
 }
 
-.btn {
-  margin-top: 22px;
-  padding: 13px 32px;
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  box-shadow: 0 0 20px rgba(168,85,247,0.2);
+.title{
+  font-size:28px;
+  color:#c77dff;
+  margin-bottom:25px;
 }
 
-.btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 30px rgba(59,130,246,0.4);
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
 }
 
-/* ================= SECTIONS ================= */
-section {
-  padding: 90px 20px;
-  text-align: center;
+/* CARDS */
+.card{
+  background:rgba(255,255,255,0.03);
+  padding:20px;
+  border-radius:14px;
+  border:1px solid rgba(199,125,255,0.2);
+  transition:0.3s;
 }
 
-h2 {
-  font-size: 28px;
-  letter-spacing: 2px;
-  color: #a855f7;
-  margin-bottom: 30px;
+.card:hover{
+  transform:translateY(-8px);
+  border-color:#c77dff;
 }
 
-/* ================= FEATURES ================= */
-.features {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  text-align:center;
 }
 
-.card {
-  width: 210px;
-  padding: 22px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(168,85,247,0.25);
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
+.stat{
+  background:#1a0033;
+  padding:20px;
+  border-radius:12px;
 }
 
-.card:hover {
-  transform: translateY(-8px);
-  border-color: #3b82f6;
-  box-shadow: 0 0 25px rgba(59,130,246,0.2);
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
 }
 
-/* ================= PACKAGES ================= */
-.packages {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 18px;
+.g{
+  height:140px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#2a004d,#7b2cbf);
+  transition:0.3s;
 }
 
-.package {
-  width: 240px;
-  padding: 25px;
-  background: linear-gradient(145deg, rgba(18,18,40,0.9), rgba(10,10,25,0.9));
-  border: 1px solid rgba(168,85,247,0.3);
-  border-radius: 16px;
-  transition: 0.3s;
-  position: relative;
-  overflow: hidden;
+.g:hover{
+  transform:scale(1.05);
+  filter:brightness(1.2);
 }
 
-.package::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(168,85,247,0.15), transparent 60%);
-  transform: rotate(25deg);
-}
-
-.package:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: #3b82f6;
-  box-shadow: 0 0 35px rgba(168,85,247,0.25);
-}
-
-.price {
-  font-size: 30px;
-  color: #3b82f6;
-  margin: 12px 0;
-  font-weight: bold;
-}
-
-/* ================= FOOTER ================= */
-footer {
-  text-align: center;
-  padding: 35px;
-  opacity: 0.6;
+/* LANG */
+.lang button{
+  background:#2a004d;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  margin-left:5px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 /* MOBILE */
 @media(max-width:768px){
-  nav { display:none; }
+  nav{display:none;}
+  .hero h1{font-size:42px;}
 }
 </style>
 </head>
@@ -212,138 +173,126 @@ footer {
   <div class="logo">GAME HUB</div>
 
   <nav>
-    <a href="#features" id="m1">Features</a>
-    <a href="#packages" id="m2">Packages</a>
-    <a href="#contact" id="m3">Contact</a>
+    <a href="#" class="t" data-en="Home" data-ru="Главная" data-am="Գլխավոր">Home</a>
+    <a href="#" class="t" data-en="Rooms" data-ru="Комнаты" data-am="Սենյակներ">Rooms</a>
+    <a href="#" class="t" data-en="Games" data-ru="Игры" data-am="Խաղեր">Games</a>
+    <a href="#" class="t" data-en="Tournaments" data-ru="Турниры" data-am="Մրցաշարեր">Tournaments</a>
+    <a href="#" class="t" data-en="Pricing" data-ru="Цены" data-am="Գներ">Pricing</a>
   </nav>
 
   <div class="lang">
-    <button onclick="switchLang()">EN</button>
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('ru')">RU</button>
+    <button onclick="setLang('am')">AM</button>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <h1 id="title">Cyber Gaming Hub</h1>
-  <p id="desc">Ultra-premium esports center with next-gen RTX gaming systems.</p>
-  <button class="btn" id="btn">Book Now</button>
+  <h1>GAME HUB</h1>
+
+  <p class="t"
+    data-en="Premium esports gaming center with high-end PCs, tournaments, VIP rooms and next-level gaming experience."
+    data-ru="Премиальный киберспортивный центр с мощными ПК и турнирами."
+    data-am="Պրեմիում էսպորտային կենտրոն բարձրակարգ համակարգիչներով">
+    text
+  </p>
+
+  <a href="#" class="btn t"
+     data-en="Book Now"
+     data-ru="Забронировать"
+     data-am="Ամրագրել">
+     Book Now
+  </a>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
-  <h2 id="ftitle">Features</h2>
+<!-- STATS -->
+<section class="section">
+  <div class="title t" data-en="Our Stats" data-ru="Наша статистика" data-am="Մեր տվյալները">Stats</div>
 
-  <div class="features">
-    <div class="card" id="f1">RTX Gaming PCs</div>
-    <div class="card" id="f2">1Gb Ultra Internet</div>
-    <div class="card" id="f3">Pro Esports Arena</div>
-    <div class="card" id="f4">24/7 Access</div>
+  <div class="stats">
+    <div class="stat">
+      <h2>50+</h2>
+      <p class="t" data-en="Gaming PCs" data-ru="Игровые ПК" data-am="Համակարգիչներ">PCs</p>
+    </div>
+
+    <div class="stat">
+      <h2>1000+</h2>
+      <p class="t" data-en="Players" data-ru="Игроки" data-am="Խաղացողներ">Players</p>
+    </div>
+
+    <div class="stat">
+      <h2>20+</h2>
+      <p class="t" data-en="Tournaments" data-ru="Турниры" data-am="Մրցաշարեր">Tournaments</p>
+    </div>
   </div>
 </section>
 
-<!-- PACKAGES -->
-<section id="packages">
-  <h2 id="ptitle">Packages</h2>
+<!-- PCS -->
+<section class="section">
+  <div class="title t" data-en="Gaming PCs" data-ru="Игровые ПК" data-am="Խաղային համակարգիչներ">
+    PCs
+  </div>
 
-  <div class="packages">
-    <div class="package">
-      <h3 id="p1">Basic</h3>
-      <div class="price">$5/hr</div>
-    </div>
-
-    <div class="package">
-      <h3 id="p2">Pro</h3>
-      <div class="price">$10/hr</div>
-    </div>
-
-    <div class="package">
-      <h3 id="p3">VIP</h3>
-      <div class="price">$20/hr</div>
-    </div>
+  <div class="grid">
+    <div class="card">RTX 4070 • i9 • 32GB</div>
+    <div class="card">RTX 3060 • i7 • 16GB</div>
+    <div class="card">GTX 1660 • i5 • 16GB</div>
   </div>
 </section>
 
-<footer id="footer">© 2026 Game Hub Cyber Ultra</footer>
+<!-- SERVICES -->
+<section class="section">
+  <div class="title t" data-en="Services" data-ru="Услуги" data-am="Ծառայություններ">
+    Services
+  </div>
+
+  <div class="grid">
+    <div class="card">🎮 Esports Training</div>
+    <div class="card">🏆 Tournaments</div>
+    <div class="card">🪑 VIP Rooms</div>
+    <div class="card">🍔 Food & Drinks</div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section">
+  <div class="title t" data-en="Gallery" data-ru="Галерея" data-am="Պատկերասրահ">
+    Gallery
+  </div>
+
+  <div class="gallery">
+    <div class="g"></div>
+    <div class="g"></div>
+    <div class="g"></div>
+    <div class="g"></div>
+    <div class="g"></div>
+    <div class="g"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="section">
+  <div class="card" style="text-align:center;">
+    © 2026 Game Hub • Esports Gaming Center
+  </div>
+</section>
 
 <script>
-
-let i = 0;
-const langs = ["en","hy","ru"];
-
-const t = {
-en:{
-title:"Cyber Gaming Hub",
-desc:"Ultra-premium esports center with next-gen RTX gaming systems.",
-btn:"Book Now",
-ftitle:"Features",
-ptitle:"Packages",
-f1:"RTX Gaming PCs",
-f2:"1Gb Ultra Internet",
-f3:"Pro Esports Arena",
-f4:"24/7 Access",
-p1:"Basic",p2:"Pro",p3:"VIP",
-m1:"Features",m2:"Packages",m3:"Contact",
-footer:"© 2026 Game Hub Cyber Ultra"
-},
-
-hy:{
-title:"Cyber Gaming Hub",
-desc:"Ultra պրեմիում esports կենտրոն RTX համակարգերով",
-btn:"Ամրագրել",
-ftitle:"Հատկություններ",
-ptitle:"Փաթեթներ",
-f1:"RTX PC",
-f2:"1Gb ինտերնետ",
-f3:"Esports Arena",
-f4:"24/7 հասանելիություն",
-p1:"Բազային",p2:"Պրո",p3:"ՎԻՊ",
-m1:"Հատկություններ",m2:"Փաթեթներ",m3:"Կապ",
-footer:"© 2026 Game Hub"
-},
-
-ru:{
-title:"Cyber Gaming Hub",
-desc:"Ультра премиум киберспорт центр с RTX системами",
-btn:"Бронь",
-ftitle:"Функции",
-ptitle:"Пакеты",
-f1:"RTX ПК",
-f2:"1Gb интернет",
-f3:"Pro арена",
-f4:"24/7 доступ",
-p1:"Базовый",p2:"Про",p3:"ВИП",
-m1:"Функции",m2:"Пакеты",m3:"Контакты",
-footer:"© 2026 Game Hub"
-}
-};
-
-function switchLang(){
-i = (i+1)%3;
-let L = langs[i];
-
-document.getElementById("title").innerText = t[L].title;
-document.getElementById("desc").innerText = t[L].desc;
-document.getElementById("btn").innerText = t[L].btn;
-
-document.getElementById("ftitle").innerText = t[L].ftitle;
-document.getElementById("ptitle").innerText = t[L].ptitle;
-
-document.getElementById("f1").innerText = t[L].f1;
-document.getElementById("f2").innerText = t[L].f2;
-document.getElementById("f3").innerText = t[L].f3;
-document.getElementById("f4").innerText = t[L].f4;
-
-document.getElementById("p1").innerText = t[L].p1;
-document.getElementById("p2").innerText = t[L].p2;
-document.getElementById("p3").innerText = t[L].p3;
-
-document.getElementById("m1").innerText = t[L].m1;
-document.getElementById("m2").innerText = t[L].m2;
-document.getElementById("m3").innerText = t[L].m3;
-
-document.getElementById("footer").innerText = t[L].footer;
+function setLang(lang){
+  localStorage.setItem("lang", lang);
+  applyLang();
 }
 
+function applyLang(){
+  let lang = localStorage.getItem("lang") || "en";
+
+  document.querySelectorAll(".t").forEach(el=>{
+    el.innerText = el.getAttribute("data-" + lang);
+  });
+}
+
+window.onload = applyLang;
 </script>
 
 </body>
