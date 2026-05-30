@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub PRO System</title>
+<title>Game Hub Computer Club</title>
 
 <style>
 body {
@@ -13,14 +13,40 @@ body {
   color: white;
 }
 
+/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
+  padding: 15px 25px;
   background: #111;
+  position: sticky;
+  top: 0;
 }
 
-button, input, select {
+.logo {
+  font-weight: bold;
+  color: #00ff99;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  color: #00ff99;
+}
+
+/* SECTION */
+section {
+  padding: 20px;
+  text-align: center;
+}
+
+/* INPUTS */
+input, select, button {
   padding: 10px;
   margin: 5px;
   border-radius: 6px;
@@ -29,23 +55,11 @@ button, input, select {
 
 button {
   background: #00ff99;
-  color: black;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
 }
 
-section {
-  padding: 20px;
-  text-align: center;
-}
-
-.card {
-  background: #151515;
-  padding: 10px;
-  margin: 8px;
-  border-radius: 10px;
-}
-
+/* GRID */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -53,24 +67,46 @@ section {
   gap: 10px;
 }
 
+/* PC BOX */
 .pc {
-  width: 120px;
+  width: 110px;
   padding: 10px;
   border-radius: 10px;
   background: #222;
 }
 
-.available { border: 2px solid #00ff99; }
-.busy { border: 2px solid red; }
+.free {
+  border: 2px solid #00ff99;
+}
 
+.busy {
+  border: 2px solid red;
+}
+
+/* CARD */
+.card {
+  background: #151515;
+  padding: 10px;
+  margin: 8px;
+  border-radius: 10px;
+}
+
+/* ADMIN */
 .admin {
   display: none;
   padding: 20px;
   background: #0f0f0f;
 }
 
+/* LOGIN */
+#login {
+  text-align: center;
+  padding: 30px;
+}
+
+/* QR */
 #qr {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 </style>
 </head>
@@ -78,8 +114,7 @@ section {
 <body>
 
 <header>
-  <div>🎮 Game Hub PRO</div>
-  <button onclick="logout()">Logout</button>
+  <div class="logo">🎮 Game Hub</div>
 </header>
 
 <!-- LOGIN -->
@@ -90,23 +125,26 @@ section {
   <button onclick="login()">Login</button>
 </section>
 
-<!-- BOOKING SYSTEM -->
+<!-- MAIN APP -->
 <section id="app" style="display:none;">
 
-<h2>PC Booking System</h2>
+<h1 class="hero">Game Hub Booking System</h1>
 
+<!-- BOOK -->
 <input id="name" placeholder="Your name">
 
 <select id="pcSelect"></select>
 
-<select id="time">
+<select id="timeSelect">
   <option>10:00-12:00</option>
   <option>12:00-14:00</option>
   <option>14:00-16:00</option>
   <option>16:00-18:00</option>
 </select>
 
-<button onclick="book()">Book PC</button>
+<button onclick="bookPC()">Book PC</button>
+
+<div id="qr"></div>
 
 <h2>Live PCs</h2>
 <div class="grid" id="pcGrid"></div>
@@ -114,17 +152,16 @@ section {
 <h2>Bookings</h2>
 <div id="list"></div>
 
-<div id="qr"></div>
-
 </section>
 
 <!-- ADMIN -->
-<section class="admin" id="adminPanel">
+<section class="admin" id="admin">
   <h2>ADMIN DASHBOARD</h2>
   <div id="adminList"></div>
+  <button onclick="logout()">Logout</button>
 </section>
 
-<!-- QR LIB -->
+<!-- QR -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 <!-- FIREBASE -->
@@ -146,11 +183,11 @@ import {
 import {
   getAuth,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-/* 🔥 FIREBASE CONFIG */
+/* 🔥 YOUR FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -166,13 +203,16 @@ const auth = getAuth(app);
 
 const bookingsRef = collection(db, "bookings");
 
+const pcs = Array.from({length:10},(_,i)=>`PC ${i+1}`);
+
 /* ================= AUTH ================= */
 
 window.login = async function(){
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
-
-  await signInWithEmailAndPassword(auth, email, pass);
+  await signInWithEmailAndPassword(
+    auth,
+    email.value,
+    password.value
+  );
 };
 
 window.logout = function(){
@@ -181,49 +221,23 @@ window.logout = function(){
 
 onAuthStateChanged(auth,(user)=>{
   if(user){
-    document.getElementById("login").style.display="none";
-    document.getElementById("app").style.display="block";
-    document.getElementById("adminPanel").style.display="block";
+    login.style.display="none";
+    appDiv.style.display="block";
+    admin.style.display="block";
   } else {
-    document.getElementById("login").style.display="block";
-    document.getElementById("app").style.display="none";
-    document.getElementById("adminPanel").style.display="none";
+    login.style.display="block";
+    appDiv.style.display="none";
+    admin.style.display="none";
   }
 });
 
-/* ================= PCS ================= */
-
-const pcs = Array.from({length:10},(_,i)=>`PC ${i+1}`);
-
-function renderPCs(bookings){
-  const grid = document.getElementById("pcGrid");
-  const select = document.getElementById("pcSelect");
-
-  grid.innerHTML="";
-  select.innerHTML="";
-
-  pcs.forEach(pc=>{
-    const isBusy = bookings.some(b=>b.pc===pc);
-
-    grid.innerHTML += `
-      <div class="pc ${isBusy?'busy':'available'}">
-        ${pc}
-      </div>
-    `;
-
-    if(!isBusy){
-      select.innerHTML += `<option>${pc}</option>`;
-    }
-  });
-}
-
 /* ================= BOOK ================= */
 
-window.book = async function(){
+window.bookPC = async function(){
 
   const name = document.getElementById("name").value;
   const pc = document.getElementById("pcSelect").value;
-  const time = document.getElementById("time").value;
+  const time = document.getElementById("timeSelect").value;
 
   if(!name) return alert("Enter name");
 
@@ -231,7 +245,7 @@ window.book = async function(){
   const snap = await getDocs(q);
 
   if(!snap.empty){
-    alert("PC already booked!");
+    alert("❌ Already booked");
     return;
   }
 
@@ -249,7 +263,7 @@ function generateQR(id){
   qrDiv.innerHTML="";
 
   QRCode.toCanvas(document.createElement("canvas"),
-  "BOOKING_ID:"+id,
+  "BOOKING:"+id,
   function (err, canvas) {
     qrDiv.appendChild(canvas);
   });
@@ -258,17 +272,22 @@ function generateQR(id){
 /* ================= LIVE ================= */
 
 onSnapshot(bookingsRef,(snap)=>{
-  let list = document.getElementById("list");
-  let admin = document.getElementById("adminList");
 
-  let all = [];
+  const list = document.getElementById("list");
+  const adminList = document.getElementById("adminList");
+  const grid = document.getElementById("pcGrid");
+  const select = document.getElementById("pcSelect");
 
   list.innerHTML="";
-  admin.innerHTML="";
+  adminList.innerHTML="";
+  grid.innerHTML="";
+  select.innerHTML="";
+
+  let active = [];
 
   snap.forEach(d=>{
     let data = d.data();
-    all.push(data);
+    active.push(data);
 
     list.innerHTML += `
       <div class="card">
@@ -276,15 +295,26 @@ onSnapshot(bookingsRef,(snap)=>{
       </div>
     `;
 
-    admin.innerHTML += `
+    adminList.innerHTML += `
       <div class="card">
-        <b>${data.name}</b> ${data.pc} ${data.time}
+        ${data.name} ${data.pc} ${data.time}
         <br><button onclick="del('${d.id}')">Delete</button>
       </div>
     `;
   });
 
-  renderPCs(all);
+  pcs.forEach(pc=>{
+    const busy = active.some(b=>b.pc===pc);
+
+    grid.innerHTML += `
+      <div class="pc ${busy?'busy':'free'}">${pc}</div>
+    `;
+
+    if(!busy){
+      select.innerHTML += `<option>${pc}</option>`;
+    }
+  });
+
 });
 
 /* ================= DELETE ================= */
