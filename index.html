@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub</title>
+<title>Game Hub | Premium Gaming Club</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: #070712;
+  background: #050510;
   color: white;
 }
 
 /* ===== TOP BAR ===== */
 header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,10,25,0.9);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: #0c0c18;
-  border-bottom: 1px solid #1c1c30;
-  position: sticky;
-  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #2b2b55;
 }
 
 .logo {
@@ -30,17 +32,13 @@ header {
   color: #a855f7;
 }
 
-/* LANGUAGE SWITCH */
-.lang {
-  display: flex;
-  gap: 10px;
-}
-
+/* LANGUAGE BUTTONS */
 .lang button {
-  background: #151530;
+  background: #12122a;
+  border: 1px solid #2a2a55;
   color: white;
-  border: 1px solid #2b2b55;
   padding: 6px 10px;
+  margin-left: 5px;
   border-radius: 6px;
   cursor: pointer;
 }
@@ -51,13 +49,13 @@ header {
 
 /* HERO */
 .hero {
-  height: 90vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(circle at center, #1a1033, #070712);
+  background: radial-gradient(circle at center, #1a1033, #050510);
   padding: 20px;
 }
 
@@ -71,7 +69,6 @@ header {
   opacity: 0.8;
 }
 
-/* BUTTON */
 .btn {
   margin-top: 20px;
   padding: 12px 25px;
@@ -80,43 +77,36 @@ header {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .btn:hover {
   background: #a855f7;
 }
 
-/* FEATURES */
-.features {
+/* SECTIONS */
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cards {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
-  padding: 70px 20px;
 }
 
 .card {
-  width: 220px;
-  padding: 20px;
   background: #12122a;
-  border: 1px solid #23234a;
+  border: 1px solid #24244a;
+  padding: 20px;
   border-radius: 10px;
-  text-align: center;
-}
-
-.card:hover {
-  border-color: #a855f7;
+  width: 200px;
 }
 
 /* GALLERY */
-.gallery {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.gallery img {
-  width: 260px;
+img {
+  width: 250px;
   margin: 10px;
   border-radius: 10px;
   border: 1px solid #2a2a55;
@@ -126,7 +116,7 @@ header {
 footer {
   text-align: center;
   padding: 30px;
-  background: #0b0b14;
+  background: #0a0a18;
   opacity: 0.7;
 }
 </style>
@@ -134,7 +124,6 @@ footer {
 
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo">🎮 GAME HUB</div>
 
@@ -147,69 +136,75 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <h1 id="title">Premium Gaming Club</h1>
-  <p id="desc">High-end PCs, esports environment, and next-level gaming experience.</p>
-  <button class="btn" id="btn">Book Now</button>
+  <h1 id="title">Game Hub Premium Club</h1>
+  <p id="desc">High-end gaming PCs, esports environment, and ultra-fast experience.</p>
+  <button class="btn" onclick="go()" id="btn">Book Now</button>
 </section>
 
 <!-- FEATURES -->
-<section class="features">
-  <div class="card" id="f1">⚡ RTX Gaming PCs</div>
-  <div class="card" id="f2">🌐 Fast Internet</div>
-  <div class="card" id="f3">🎮 Esports Setup</div>
-  <div class="card" id="f4">🏆 Tournaments</div>
+<section>
+  <h2 id="ftitle" style="color:#a855f7;">Features</h2>
+
+  <div class="cards">
+    <div class="card" id="f1">RTX Gaming PCs</div>
+    <div class="card" id="f2">1Gb Internet</div>
+    <div class="card" id="f3">Esports Setup</div>
+    <div class="card" id="f4">24/7 Gaming</div>
+  </div>
 </section>
 
 <!-- GALLERY -->
-<section class="gallery">
-  <h2 id="gtitle" style="color:#a855f7;">Gaming Setup</h2>
+<section>
+  <h2 id="gtitle" style="color:#a855f7;">Gallery</h2>
 
   <img src="https://images.unsplash.com/photo-1587202372775-98927e12e8e4">
   <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f">
   <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
 </section>
 
-<!-- FOOTER -->
 <footer id="footer">
-  © 2026 Game Hub • All rights reserved
+  © 2026 Game Hub
 </footer>
 
 <script>
 const texts = {
   en: {
-    title: "Premium Gaming Club",
-    desc: "High-end PCs, esports environment, and next-level gaming experience.",
+    title: "Game Hub Premium Club",
+    desc: "High-end gaming PCs, esports environment, and ultra-fast experience.",
     btn: "Book Now",
+    ftitle: "Features",
     f1: "RTX Gaming PCs",
-    f2: "Fast Internet",
+    f2: "1Gb Internet",
     f3: "Esports Setup",
-    f4: "Tournaments",
-    gtitle: "Gaming Setup",
-    footer: "© 2026 Game Hub • All rights reserved"
+    f4: "24/7 Gaming",
+    gtitle: "Gallery",
+    footer: "© 2026 Game Hub"
   },
 
   hy: {
-    title: "Պրեմիում խաղային ակումբ",
-    desc: "Հզոր համակարգիչներ, էսպորտ միջավայր և բարձր մակարդակի խաղային փորձ։",
+    title: "Game Hub Պրեմիում Ակումբ",
+    desc: "Հզոր խաղային համակարգիչներ, էսպորտ միջավայր և արագ ինտերնետ։",
     btn: "Ամրագրել",
+    ftitle: "Հատկություններ",
     f1: "RTX խաղային PC-ներ",
-    f2: "Արագ ինտերնետ",
+    f2: "1Gb ինտերնետ",
     f3: "Esports setup",
-    f4: "Մրցաշարեր",
-    gtitle: "Խաղային միջավայր",
-    footer: "© 2026 Game Hub • Բոլոր իրավունքները պաշտպանված են"
+    f4: "24/7 խաղ",
+    gtitle: "Գալերիա",
+    footer: "© 2026 Game Hub"
   },
 
   ru: {
-    title: "Премиум игровой клуб",
-    desc: "Мощные ПК, киберспорт среда и игровой опыт нового уровня.",
+    title: "Game Hub Премиум клуб",
+    desc: "Мощные игровые ПК, киберспорт и сверхбыстрый интернет.",
     btn: "Забронировать",
+    ftitle: "Функции",
     f1: "RTX игровые ПК",
-    f2: "Быстрый интернет",
+    f2: "1Gb интернет",
     f3: "Киберспорт сетап",
-    f4: "Турниры",
-    gtitle: "Игровая зона",
-    footer: "© 2026 Game Hub • Все права защищены"
+    f4: "24/7 игры",
+    gtitle: "Галерея",
+    footer: "© 2026 Game Hub"
   }
 };
 
@@ -218,6 +213,7 @@ function setLang(lang){
   document.getElementById("desc").innerText = texts[lang].desc;
   document.getElementById("btn").innerText = texts[lang].btn;
 
+  document.getElementById("ftitle").innerText = texts[lang].ftitle;
   document.getElementById("f1").innerText = texts[lang].f1;
   document.getElementById("f2").innerText = texts[lang].f2;
   document.getElementById("f3").innerText = texts[lang].f3;
@@ -225,6 +221,10 @@ function setLang(lang){
 
   document.getElementById("gtitle").innerText = texts[lang].gtitle;
   document.getElementById("footer").innerText = texts[lang].footer;
+}
+
+function go(){
+  alert("Next step: connect booking page or Firebase");
 }
 </script>
 
