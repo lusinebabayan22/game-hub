@@ -1,124 +1,340 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  onSnapshot,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub | Premium Gaming Club</title>
 
-/* 🔥 FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const ref = collection(db,"bookings");
-
-const pcs = ["PC 1","PC 2","PC 3","PC 4","PC 5","PC 6","PC 7","PC 8","PC 9","PC 10"];
-
-/* ================= ADMIN HIDDEN SYSTEM ================= */
-
-const ADMIN_KEY = "ROOT123"; // 🔐 change this
-
-function isAdmin(){
-  const hash = window.location.hash;
-  return hash.includes(ADMIN_KEY);
+<style>
+/* ================= GLOBAL ================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #050507;
+  color: white;
+  overflow-x: hidden;
 }
 
-/* SHOW ADMIN PANEL ONLY IF KEY EXISTS */
-window.addEventListener("load",()=>{
-  if(isAdmin()){
-    document.getElementById("adminPanel").style.display="block";
-  }
-});
+a { text-decoration: none; color: inherit; }
 
-/* ================= BOOK ================= */
+/* ================= NAVBAR ================= */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  z-index: 999;
+}
 
-window.book = async function(){
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #00ff99;
+  letter-spacing: 2px;
+}
 
-  const name = document.getElementById("name").value;
-  const pc = document.getElementById("pc").value;
-  const time = document.getElementById("time").value;
+nav a {
+  margin: 0 12px;
+  font-size: 14px;
+  transition: 0.3s;
+}
 
-  if(!name) return alert("Enter name");
+nav a:hover {
+  color: #00ff99;
+}
 
-  const q = query(ref, where("pc","==",pc), where("time","==",time));
-  const snap = await getDocs(q);
+/* ================= HERO ================= */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #101020, #050507);
+  padding: 0 20px;
+}
 
-  if(!snap.empty){
-    alert("Already booked!");
-    return;
-  }
+.hero h1 {
+  font-size: 70px;
+  color: #00ff99;
+  margin: 0;
+  animation: glow 2s infinite alternate;
+}
 
-  await addDoc(ref,{name,pc,time});
-};
+.hero p {
+  max-width: 600px;
+  opacity: 0.7;
+  margin-top: 15px;
+}
 
-/* ================= LIVE ================= */
+.btn {
+  margin-top: 25px;
+  padding: 12px 28px;
+  background: #00ff99;
+  color: black;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-onSnapshot(ref,(snap)=>{
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ff99;
+}
 
-  const list = document.getElementById("list");
-  const pcsDiv = document.getElementById("pcs");
-  const select = document.getElementById("pc");
-  const adminList = document.getElementById("adminList");
+/* ================= STATS ================= */
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 80px 20px;
+}
 
-  list.innerHTML="";
-  pcsDiv.innerHTML="";
-  select.innerHTML="";
-  adminList.innerHTML="";
+.stat {
+  background: #12121a;
+  padding: 30px;
+  width: 180px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid #1f1f2a;
+}
 
-  let used=[];
+.stat h2 {
+  color: #00ff99;
+  font-size: 28px;
+}
 
-  snap.forEach(d=>{
-    let data=d.data();
-    used.push(data);
+/* ================= FEATURES ================= */
+.features {
+  padding: 80px 20px;
+  text-align: center;
+}
 
-    /* USER VIEW */
-    list.innerHTML += `
-      <div class="card">${data.name} | ${data.pc} | ${data.time}</div>
-    `;
+.features h2 {
+  color: #00ff99;
+  margin-bottom: 40px;
+}
 
-    /* ADMIN VIEW */
-    if(isAdmin()){
-      adminList.innerHTML += `
-        <div class="card">
-          ${data.name} | ${data.pc} | ${data.time}
-          <br>
-          <button onclick="del('${d.id}')">Delete</button>
-        </div>
-      `;
-    }
-  });
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
 
-  pcs.forEach(p=>{
-    const busy = used.some(b=>b.pc===p);
+.card {
+  background: #12121a;
+  padding: 25px;
+  width: 220px;
+  border-radius: 12px;
+  border: 1px solid #1f1f2a;
+  transition: 0.3s;
+}
 
-    pcsDiv.innerHTML += `
-      <div class="card">${p} ${busy?"🔴":"🟢"}</div>
-    `;
+.card:hover {
+  transform: translateY(-10px);
+  border-color: #00ff99;
+}
 
-    if(!busy){
-      select.innerHTML += `<option>${p}</option>`;
-    }
-  });
+/* ================= PC SHOWCASE ================= */
+.showcase {
+  padding: 80px 20px;
+  text-align: center;
+}
 
-});
+.showcase h2 {
+  color: #00ff99;
+}
 
-/* ================= DELETE (ADMIN ONLY) ================= */
+.pc-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
 
-window.del = async function(id){
-  if(!isAdmin()) return alert("No access");
-  await deleteDoc(doc(db,"bookings",id));
-};
+.pc {
+  width: 140px;
+  padding: 20px;
+  background: #1a1a24;
+  border-radius: 10px;
+  border: 1px solid #2a2a35;
+}
+
+/* ================= TOURNAMENT ================= */
+.tournament {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(120deg,#0a0a0f,#101020);
+}
+
+.tournament h2 {
+  color: #00ff99;
+}
+
+/* ================= GALLERY ================= */
+.gallery {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.gallery h2 {
+  color: #00ff99;
+}
+
+.gallery img {
+  width: 260px;
+  margin: 10px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* ================= FAQ ================= */
+.faq {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.faq h2 {
+  color: #00ff99;
+}
+
+.faq-item {
+  background: #12121a;
+  margin: 10px auto;
+  max-width: 700px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  padding: 40px;
+  background: #0a0a0f;
+  opacity: 0.7;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ff99; }
+  to { text-shadow: 0 0 30px #00ff99; }
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+  .hero h1 { font-size: 40px; }
+  nav { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="logo">🎮 GAME HUB</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="booking.html">Booking</a>
+    <a href="#features">Features</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Next Level Gaming Experience</h1>
+  <p>Premium gaming club with RTX PCs, ultra-low latency internet, and esports-ready environment.</p>
+  <a href="booking.html" class="btn">Book Your PC</a>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat"><h2>10+</h2><p>Gaming PCs</p></div>
+  <div class="stat"><h2>1Gbps</h2><p>Internet Speed</p></div>
+  <div class="stat"><h2>24/7</h2><p>Access</p></div>
+  <div class="stat"><h2>100%</h2><p>Performance</p></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <h2>Our Features</h2>
+  <div class="grid">
+    <div class="card">⚡ RTX 4060 / 4070 PCs</div>
+    <div class="card">🎧 Gaming Headsets</div>
+    <div class="card">🌐 Ultra Fast Internet</div>
+    <div class="card">🏆 Tournaments</div>
+    <div class="card">🕹️ PS / PC Hybrid Zone</div>
+  </div>
+</section>
+
+<!-- PC SHOWCASE -->
+<section class="showcase">
+  <h2>Available PCs</h2>
+  <div class="pc-grid">
+    <div class="pc">PC 1</div>
+    <div class="pc">PC 2</div>
+    <div class="pc">PC 3</div>
+    <div class="pc">PC 4</div>
+    <div class="pc">PC 5</div>
+  </div>
+</section>
+
+<!-- TOURNAMENT -->
+<section class="tournament">
+  <h2>Upcoming Tournament</h2>
+  <p>Join weekly esports competitions and win real prizes.</p>
+  <a href="booking.html" class="btn">Register Now</a>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <h2>Gaming Setup</h2>
+
+  <img src="https://images.unsplash.com/photo-1587202372775-98927e12e8e4">
+  <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f">
+  <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <h2>FAQ</h2>
+
+  <div class="faq-item">
+    <b>Do I need to book in advance?</b><br>
+    Yes, booking ensures PC availability.
+  </div>
+
+  <div class="faq-item">
+    <b>Can I cancel booking?</b><br>
+    Yes, before your time slot starts.
+  </div>
+
+  <div class="faq-item">
+    <b>Do you have tournaments?</b><br>
+    Yes, weekly esports events.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Game Hub • Premium Gaming Computer Club
+</footer>
+
+</body>
+</html>
