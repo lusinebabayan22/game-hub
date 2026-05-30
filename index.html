@@ -3,54 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub | Premium Gaming Club</title>
+<title>Game Hub Premium</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: #050510;
+  background: radial-gradient(circle at top, #0b0b1a, #050510);
   color: white;
 }
 
-/* ===== NAVBAR ===== */
+/* ===== HEADER ===== */
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(10,10,25,0.7);
-  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  border-bottom: 1px solid rgba(168,85,247,0.2);
+  background: rgba(15, 10, 30, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(168,85,247,0.3);
   z-index: 1000;
 }
 
 .logo {
   font-weight: bold;
   color: #a855f7;
+  font-size: 18px;
 }
 
-/* MENU */
+/* MENU (NOW MORE VISIBLE) */
 nav {
   display: flex;
-  gap: 15px;
+  gap: 18px;
 }
 
 nav a {
   color: #cbd5e1;
   text-decoration: none;
   font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 6px;
   transition: 0.3s;
 }
 
 nav a:hover {
-  color: #a855f7;
+  background: rgba(59,130,246,0.2);
+  color: #3b82f6;
 }
 
-/* LANGUAGE BUTTON */
+/* LANGUAGE BUTTON (CLEAR CHANGE) */
 .lang-btn {
   background: linear-gradient(135deg, #3b82f6, #a855f7);
   border: none;
@@ -61,7 +65,7 @@ nav a:hover {
   font-weight: bold;
 }
 
-/* ===== HERO ===== */
+/* ===== HERO (MORE PREMIUM) ===== */
 .hero {
   height: 100vh;
   display: flex;
@@ -69,42 +73,46 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(circle at center, #1a1033, #050510);
   padding: 20px;
 }
 
 .hero h1 {
-  font-size: 60px;
+  font-size: 65px;
+  margin: 0;
   color: #a855f7;
+  text-shadow: 0 0 25px rgba(168,85,247,0.6);
 }
 
 .hero p {
   max-width: 600px;
   opacity: 0.8;
+  margin-top: 15px;
 }
 
+/* BUTTON */
 .btn {
-  margin-top: 20px;
+  margin-top: 25px;
   padding: 12px 28px;
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  font-weight: bold;
   transition: 0.3s;
 }
 
 .btn:hover {
-  background: #a855f7;
+  transform: scale(1.05);
 }
 
-/* SECTIONS */
+/* ===== SECTIONS ===== */
 section {
   padding: 90px 20px;
   text-align: center;
 }
 
-/* CARDS */
+/* CARDS (MORE PREMIUM LOOK) */
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -113,19 +121,31 @@ section {
 }
 
 .card {
-  background: #12122a;
-  border: 1px solid #24244a;
+  background: rgba(18,18,40,0.8);
+  border: 1px solid rgba(168,85,247,0.3);
   padding: 20px;
   border-radius: 12px;
   width: 200px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59,130,246,0.2);
 }
 
 /* GALLERY */
 img {
-  width: 250px;
+  width: 260px;
   margin: 10px;
-  border-radius: 10px;
-  border: 1px solid #2a2a55;
+  border-radius: 12px;
+  border: 1px solid rgba(168,85,247,0.3);
+  transition: 0.3s;
+}
+
+img:hover {
+  transform: scale(1.05);
 }
 
 /* FOOTER */
@@ -140,7 +160,6 @@ footer {
 
 <body>
 
-<!-- NAV -->
 <header>
   <div class="logo">🎮 GAME HUB</div>
 
@@ -151,7 +170,6 @@ footer {
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- ONE BUTTON LANGUAGE SWITCH -->
   <button class="lang-btn" onclick="switchLang()">EN</button>
 </header>
 
@@ -164,7 +182,7 @@ footer {
 
 <!-- FEATURES -->
 <section id="features">
-  <h2 id="ftitle" style="color:#a855f7;">Features</h2>
+  <h2 style="color:#a855f7;" id="ftitle">Features</h2>
 
   <div class="cards">
     <div class="card" id="f1">RTX Gaming PCs</div>
@@ -176,88 +194,44 @@ footer {
 
 <!-- GALLERY -->
 <section id="gallery">
-  <h2 id="gtitle" style="color:#a855f7;">Gallery</h2>
+  <h2 style="color:#a855f7;" id="gtitle">Gallery</h2>
 
   <img src="https://images.unsplash.com/photo-1587202372775-98927e12e8e4">
   <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f">
   <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
 </section>
 
-<footer id="footer">
-  © 2026 Game Hub
-</footer>
+<footer id="footer">© 2026 Game Hub</footer>
 
 <script>
-
-let langIndex = 0; // 0=en, 1=hy, 2=ru
-
+let i = 0;
 const langs = ["en","hy","ru"];
 
-const texts = {
-  en: {
-    title: "Game Hub Premium Club",
-    desc: "High-end gaming PCs, esports environment, and ultra-fast experience.",
-    btn: "Book Now",
-    ftitle: "Features",
-    f1: "RTX Gaming PCs",
-    f2: "1Gb Internet",
-    f3: "Esports Setup",
-    f4: "24/7 Gaming",
-    gtitle: "Gallery",
-    footer: "© 2026 Game Hub"
-  },
-
-  hy: {
-    title: "Game Hub Պրեմիում Ակումբ",
-    desc: "Հզոր խաղային համակարգիչներ, էսպորտ միջավայր և արագ ինտերնետ։",
-    btn: "Ամրագրել",
-    ftitle: "Հատկություններ",
-    f1: "RTX խաղային PC-ներ",
-    f2: "1Gb ինտերնետ",
-    f3: "Esports setup",
-    f4: "24/7 խաղ",
-    gtitle: "Գալերիա",
-    footer: "© 2026 Game Hub"
-  },
-
-  ru: {
-    title: "Game Hub Премиум клуб",
-    desc: "Мощные игровые ПК, киберспорт и сверхбыстрый интернет.",
-    btn: "Забронировать",
-    ftitle: "Функции",
-    f1: "RTX игровые ПК",
-    f2: "1Gb интернет",
-    f3: "Киберспорт сетап",
-    f4: "24/7 игры",
-    gtitle: "Галерея",
-    footer: "© 2026 Game Hub"
-  }
+const t = {
+ en:{title:"Game Hub Premium Club",desc:"High-end gaming PCs, esports environment, and ultra-fast experience.",btn:"Book Now",ftitle:"Features",f1:"RTX PCs",f2:"1Gb Internet",f3:"Esports Setup",f4:"24/7 Gaming",gtitle:"Gallery",footer:"© 2026 Game Hub"},
+ hy:{title:"Game Hub Պրեմիում",desc:"Հզոր համակարգիչներ և էսպորտ միջավայր",btn:"Ամրագրել",ftitle:"Հատկություններ",f1:"RTX PC",f2:"1Gb ինտերնետ",f3:"Esports",f4:"24/7 խաղ",gtitle:"Գալերիա",footer:"© 2026 Game Hub"},
+ ru:{title:"Game Hub Премиум",desc:"Мощные ПК и киберспорт",btn:"Бронь",ftitle:"Функции",f1:"RTX ПК",f2:"1Gb интернет",f3:"Esports",f4:"24/7 игры",gtitle:"Галерея",footer:"© 2026 Game Hub"}
 };
 
-function applyLang(lang){
-  document.getElementById("title").innerText = texts[lang].title;
-  document.getElementById("desc").innerText = texts[lang].desc;
-  document.getElementById("btn").innerText = texts[lang].btn;
-
-  document.getElementById("ftitle").innerText = texts[lang].ftitle;
-  document.getElementById("f1").innerText = texts[lang].f1;
-  document.getElementById("f2").innerText = texts[lang].f2;
-  document.getElementById("f3").innerText = texts[lang].f3;
-  document.getElementById("f4").innerText = texts[lang].f4;
-
-  document.getElementById("gtitle").innerText = texts[lang].gtitle;
-  document.getElementById("footer").innerText = texts[lang].footer;
-
-  document.querySelector(".lang-btn").innerText = lang.toUpperCase();
-}
-
 function switchLang(){
-  langIndex = (langIndex + 1) % 3;
-  applyLang(langs[langIndex]);
+ i = (i+1)%3;
+ let L = langs[i];
+
+ document.getElementById("title").innerText = t[L].title;
+ document.getElementById("desc").innerText = t[L].desc;
+ document.getElementById("btn").innerText = t[L].btn;
+
+ document.getElementById("ftitle").innerText = t[L].ftitle;
+ document.getElementById("f1").innerText = t[L].f1;
+ document.getElementById("f2").innerText = t[L].f2;
+ document.getElementById("f3").innerText = t[L].f3;
+ document.getElementById("f4").innerText = t[L].f4;
+
+ document.getElementById("gtitle").innerText = t[L].gtitle;
+ document.getElementById("footer").innerText = t[L].footer;
+
+ document.querySelector(".lang-btn").innerText = L.toUpperCase();
 }
-
-applyLang("en");
-
 </script>
 
 </body>
