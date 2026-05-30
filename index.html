@@ -6,49 +6,42 @@
 <title>Game Hub | Premium Gaming Club</title>
 
 <style>
-/* ================= GLOBAL ================= */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #050507;
   color: white;
-  overflow-x: hidden;
 }
 
-a { text-decoration: none; color: inherit; }
-
-/* ================= NAVBAR ================= */
+/* NAV */
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(10,10,15,0.9);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 18px 40px;
-  z-index: 999;
+  padding: 15px 30px;
+  z-index: 1000;
 }
 
 .logo {
-  font-size: 22px;
-  font-weight: bold;
   color: #00ff99;
-  letter-spacing: 2px;
+  font-weight: bold;
 }
 
+/* MENU */
 nav a {
-  margin: 0 12px;
-  font-size: 14px;
-  transition: 0.3s;
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
 }
 
 nav a:hover {
   color: #00ff99;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 .hero {
   height: 100vh;
   display: flex;
@@ -56,73 +49,37 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(circle at center, #101020, #050507);
-  padding: 0 20px;
+  padding: 20px;
+  background: radial-gradient(circle, #101020, #050507);
 }
 
 .hero h1 {
-  font-size: 70px;
+  font-size: 55px;
   color: #00ff99;
-  margin: 0;
-  animation: glow 2s infinite alternate;
 }
 
 .hero p {
-  max-width: 600px;
   opacity: 0.7;
-  margin-top: 15px;
+  max-width: 600px;
 }
 
 .btn {
-  margin-top: 25px;
-  padding: 12px 28px;
+  margin-top: 20px;
+  padding: 12px 25px;
   background: #00ff99;
   color: black;
+  border: none;
   border-radius: 8px;
-  font-weight: bold;
-  transition: 0.3s;
+  cursor: pointer;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px #00ff99;
-}
-
-/* ================= STATS ================= */
-.stats {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 80px 20px;
-}
-
-.stat {
-  background: #12121a;
-  padding: 30px;
-  width: 180px;
-  text-align: center;
-  border-radius: 12px;
-  border: 1px solid #1f1f2a;
-}
-
-.stat h2 {
-  color: #00ff99;
-  font-size: 28px;
-}
-
-/* ================= FEATURES ================= */
-.features {
+/* SECTIONS */
+section {
   padding: 80px 20px;
   text-align: center;
 }
 
-.features h2 {
-  color: #00ff99;
-  margin-bottom: 40px;
-}
-
-.grid {
+.cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -131,210 +88,77 @@ nav a:hover {
 
 .card {
   background: #12121a;
-  padding: 25px;
-  width: 220px;
-  border-radius: 12px;
-  border: 1px solid #1f1f2a;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  border-color: #00ff99;
-}
-
-/* ================= PC SHOWCASE ================= */
-.showcase {
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.showcase h2 {
-  color: #00ff99;
-}
-
-.pc-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.pc {
-  width: 140px;
   padding: 20px;
-  background: #1a1a24;
   border-radius: 10px;
-  border: 1px solid #2a2a35;
+  width: 200px;
 }
 
-/* ================= TOURNAMENT ================= */
-.tournament {
-  padding: 80px 20px;
-  text-align: center;
-  background: linear-gradient(120deg,#0a0a0f,#101020);
-}
-
-.tournament h2 {
-  color: #00ff99;
-}
-
-/* ================= GALLERY ================= */
-.gallery {
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.gallery h2 {
-  color: #00ff99;
-}
-
-.gallery img {
-  width: 260px;
+/* GALLERY */
+img {
+  width: 250px;
   margin: 10px;
-  border-radius: 12px;
-  transition: 0.3s;
-}
-
-.gallery img:hover {
-  transform: scale(1.05);
-}
-
-/* ================= FAQ ================= */
-.faq {
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.faq h2 {
-  color: #00ff99;
-}
-
-.faq-item {
-  background: #12121a;
-  margin: 10px auto;
-  max-width: 700px;
-  padding: 15px;
   border-radius: 10px;
-  text-align: left;
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 footer {
   text-align: center;
-  padding: 40px;
+  padding: 30px;
   background: #0a0a0f;
   opacity: 0.7;
-}
-
-/* ================= ANIMATION ================= */
-@keyframes glow {
-  from { text-shadow: 0 0 10px #00ff99; }
-  to { text-shadow: 0 0 30px #00ff99; }
-}
-
-/* ================= RESPONSIVE ================= */
-@media(max-width:768px){
-  .hero h1 { font-size: 40px; }
-  nav { display: none; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <header>
   <div class="logo">🎮 GAME HUB</div>
   <nav>
     <a href="#">Home</a>
-    <a href="booking.html">Booking</a>
-    <a href="#features">Features</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#faq">FAQ</a>
+    <a href="#">Features</a>
+    <a href="#">Gallery</a>
+    <a href="#">Contact</a>
   </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Next Level Gaming Experience</h1>
-  <p>Premium gaming club with RTX PCs, ultra-low latency internet, and esports-ready environment.</p>
-  <a href="booking.html" class="btn">Book Your PC</a>
-</section>
-
-<!-- STATS -->
-<section class="stats">
-  <div class="stat"><h2>10+</h2><p>Gaming PCs</p></div>
-  <div class="stat"><h2>1Gbps</h2><p>Internet Speed</p></div>
-  <div class="stat"><h2>24/7</h2><p>Access</p></div>
-  <div class="stat"><h2>100%</h2><p>Performance</p></div>
+  <h1>Game Hub Premium Club</h1>
+  <p>High-end gaming PCs, esports environment, and ultra-fast experience.</p>
+  <button class="btn" onclick="go()">Book Now</button>
 </section>
 
 <!-- FEATURES -->
-<section class="features" id="features">
-  <h2>Our Features</h2>
-  <div class="grid">
-    <div class="card">⚡ RTX 4060 / 4070 PCs</div>
-    <div class="card">🎧 Gaming Headsets</div>
-    <div class="card">🌐 Ultra Fast Internet</div>
-    <div class="card">🏆 Tournaments</div>
-    <div class="card">🕹️ PS / PC Hybrid Zone</div>
-  </div>
-</section>
+<section>
+  <h2 style="color:#00ff99;">Features</h2>
 
-<!-- PC SHOWCASE -->
-<section class="showcase">
-  <h2>Available PCs</h2>
-  <div class="pc-grid">
-    <div class="pc">PC 1</div>
-    <div class="pc">PC 2</div>
-    <div class="pc">PC 3</div>
-    <div class="pc">PC 4</div>
-    <div class="pc">PC 5</div>
+  <div class="cards">
+    <div class="card">RTX Gaming PCs</div>
+    <div class="card">1Gb Internet</div>
+    <div class="card">Esports Setup</div>
+    <div class="card">24/7 Gaming</div>
   </div>
-</section>
-
-<!-- TOURNAMENT -->
-<section class="tournament">
-  <h2>Upcoming Tournament</h2>
-  <p>Join weekly esports competitions and win real prizes.</p>
-  <a href="booking.html" class="btn">Register Now</a>
 </section>
 
 <!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <h2>Gaming Setup</h2>
+<section>
+  <h2 style="color:#00ff99;">Gallery</h2>
 
   <img src="https://images.unsplash.com/photo-1587202372775-98927e12e8e4">
   <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f">
   <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
 </section>
 
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <h2>FAQ</h2>
-
-  <div class="faq-item">
-    <b>Do I need to book in advance?</b><br>
-    Yes, booking ensures PC availability.
-  </div>
-
-  <div class="faq-item">
-    <b>Can I cancel booking?</b><br>
-    Yes, before your time slot starts.
-  </div>
-
-  <div class="faq-item">
-    <b>Do you have tournaments?</b><br>
-    Yes, weekly esports events.
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  © 2026 Game Hub • Premium Gaming Computer Club
+  © 2026 Game Hub
 </footer>
+
+<script>
+function go(){
+  alert("Next step: connect booking page or Firebase");
+}
+</script>
 
 </body>
 </html>
