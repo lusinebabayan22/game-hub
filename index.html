@@ -13,41 +13,71 @@ body {
   color: white;
 }
 
-/* ===== TOP BAR ===== */
+/* ================= NAVBAR ================= */
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(10,10,25,0.9);
+  background: rgba(10,10,25,0.6);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 15px 40px;
   z-index: 1000;
-  border-bottom: 1px solid #2b2b55;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.2);
 }
 
 .logo {
   font-weight: bold;
+  font-size: 18px;
+  color: #a855f7;
+  letter-spacing: 2px;
+}
+
+/* ================= MENU ================= */
+nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+nav a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+nav a:hover {
+  background: rgba(168,85,247,0.2);
   color: #a855f7;
 }
 
-/* LANGUAGE BUTTONS */
+/* ================= LANGUAGE ================= */
+.lang {
+  display: flex;
+  gap: 6px;
+}
+
 .lang button {
   background: #12122a;
   border: 1px solid #2a2a55;
   color: white;
   padding: 6px 10px;
-  margin-left: 5px;
   border-radius: 6px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .lang button:hover {
   border-color: #3b82f6;
+  color: #3b82f6;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero {
   height: 100vh;
   display: flex;
@@ -55,40 +85,48 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(circle at center, #1a1033, #050510);
   padding: 20px;
+  background: radial-gradient(circle at center, #1a1033, #050510);
 }
 
 .hero h1 {
-  font-size: 55px;
+  font-size: 60px;
+  margin: 0;
   color: #a855f7;
+  text-shadow: 0 0 25px rgba(168,85,247,0.4);
 }
 
 .hero p {
   max-width: 600px;
   opacity: 0.8;
+  margin-top: 15px;
 }
 
+/* BUTTON */
 .btn {
   margin-top: 20px;
-  padding: 12px 25px;
-  background: #3b82f6;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
 }
 
 .btn:hover {
-  background: #a855f7;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(168,85,247,0.5);
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 section {
-  padding: 80px 20px;
+  padding: 90px 20px;
   text-align: center;
 }
 
+/* ================= CARDS ================= */
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -97,52 +135,77 @@ section {
 }
 
 .card {
-  background: #12122a;
-  border: 1px solid #24244a;
+  background: rgba(18,18,42,0.8);
+  border: 1px solid rgba(168,85,247,0.2);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
   width: 200px;
+  transition: 0.3s;
 }
 
-/* GALLERY */
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #a855f7;
+  box-shadow: 0 0 20px rgba(59,130,246,0.2);
+}
+
+/* ================= GALLERY ================= */
 img {
   width: 250px;
   margin: 10px;
-  border-radius: 10px;
-  border: 1px solid #2a2a55;
+  border-radius: 12px;
+  border: 1px solid rgba(168,85,247,0.2);
+  transition: 0.3s;
 }
 
-/* FOOTER */
+img:hover {
+  transform: scale(1.05);
+}
+
+/* ================= FOOTER ================= */
 footer {
   text-align: center;
   padding: 30px;
   background: #0a0a18;
   opacity: 0.7;
+  border-top: 1px solid rgba(168,85,247,0.2);
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <header>
+
   <div class="logo">🎮 GAME HUB</div>
 
+  <!-- MENU -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#features">Features</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- LANGUAGE -->
   <div class="lang">
     <button onclick="setLang('en')">EN</button>
     <button onclick="setLang('hy')">HY</button>
     <button onclick="setLang('ru')">RU</button>
   </div>
+
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <h1 id="title">Game Hub Premium Club</h1>
   <p id="desc">High-end gaming PCs, esports environment, and ultra-fast experience.</p>
-  <button class="btn" onclick="go()" id="btn">Book Now</button>
+  <button class="btn" id="btn" onclick="go()">Book Now</button>
 </section>
 
 <!-- FEATURES -->
-<section>
+<section id="features">
   <h2 id="ftitle" style="color:#a855f7;">Features</h2>
 
   <div class="cards">
@@ -154,7 +217,7 @@ footer {
 </section>
 
 <!-- GALLERY -->
-<section>
+<section id="gallery">
   <h2 id="gtitle" style="color:#a855f7;">Gallery</h2>
 
   <img src="https://images.unsplash.com/photo-1587202372775-98927e12e8e4">
@@ -162,6 +225,7 @@ footer {
   <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6">
 </section>
 
+<!-- FOOTER -->
 <footer id="footer">
   © 2026 Game Hub
 </footer>
