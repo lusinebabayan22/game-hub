@@ -1,1 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub | Games</title>
 
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:radial-gradient(circle at top,#1a0033,#0a0014);
+    color:white;
+}
+
+/* HEADER */
+
+header{
+    background:rgba(18,0,34,0.9);
+    border-bottom:1px solid #2a004d;
+    backdrop-filter:blur(10px);
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    letter-spacing:2px;
+    color:#c77dff;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c77dff;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:60px;
+    color:#c77dff;
+    margin-bottom:15px;
+    text-shadow:0 0 25px rgba(199,125,255,.5);
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    opacity:.8;
+}
+
+/* GAMES GRID */
+
+.games{
+    max-width:1400px;
+    margin:auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+/* CARD */
+
+.card{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(199,125,255,.15);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#c77dff;
+    box-shadow:0 0 25px rgba(199,125,255,.25);
+}
+
+/* PHOTO */
+
+.game-photo{
+    height:180px;
+    background-size:cover;
+    background-position:center;
+}
+
+/* CONTENT */
+
+.content{
+    padding:20px;
+}
+
+.content h2{
+    color:#c77dff;
+    margin-bottom:10px;
+}
+
+.content p{
+    opacity:.8;
+    line-height:1.5;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    text-align:center;
+    padding:25px;
+    border-top:1px solid #2a004d;
+    opacity:.7;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:42px;
+}
+
+nav{
+    display:none;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">GAME HUB</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="rooms.html">Rooms</a>
+<a href="games.html">Games</a>
+<a href="pricing.html">Pricing</a>
+</nav>
+
+</header>
+
+<section class="hero">
+<h1>GAME LIBRARY</h1>
+<p>
+Play the world's most popular esports and multiplayer games
+on high-performance gaming PCs.
+</p>
+</section>
+
+<section class="games">
+
+<!-- DOTA 2 -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Dota 2</h2>
+<p>Competitive MOBA with strategic team battles and international tournaments.</p>
+</div>
+</div>
+
+<!-- CS2 -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Counter-Strike 2</h2>
+<p>The ultimate tactical shooter with ranked matches and esports competition.</p>
+</div>
+</div>
+
+<!-- VALORANT -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Valorant</h2>
+<p>Agent-based FPS combining precise shooting and unique abilities.</p>
+</div>
+</div>
+
+<!-- LOL -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>League of Legends</h2>
+<p>One of the world's most played competitive strategy games.</p>
+</div>
+</div>
+
+<!-- FORTNITE -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Fortnite</h2>
+<p>Battle royale action with creative building and live events.</p>
+</div>
+</div>
+
+<!-- ROBLOX -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Roblox</h2>
+<p>Millions of games and experiences created by players worldwide.</p>
+</div>
+</div>
+
+<!-- LEFT 4 DEAD 2 -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Left 4 Dead 2</h2>
+<p>Classic cooperative zombie survival shooter.</p>
+</div>
+</div>
+
+<!-- MEDAL OF HONOR -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Medal of Honor</h2>
+<p>Military combat experience inspired by historic battles.</p>
+</div>
+</div>
+
+<!-- WARZONE -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Warzone</h2>
+<p>Large-scale Call of Duty battle royale experience.</p>
+</div>
+</div>
+
+<!-- CALL OF DUTY -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Call of Duty</h2>
+<p>Fast-paced multiplayer shooter with multiple game modes.</p>
+</div>
+</div>
+
+<!-- APEX -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Apex Legends</h2>
+<p>Squad-based battle royale featuring unique heroes and abilities.</p>
+</div>
+</div>
+
+<!-- ROCKET LEAGUE -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Rocket League</h2>
+<p>Rocket-powered cars competing in high-speed football matches.</p>
+</div>
+</div>
+
+<!-- WARFACE -->
+<div class="card">
+<div class="game-photo" style="background-image:url('PHOTO-LINK-HERE');"></div>
+<div class="content">
+<h2>Warface</h2>
+<p>Online FPS with PvP battles and cooperative missions.</p>
+</div>
+</div>
+
+</section>
+
+<footer>
+© 2026 GAME HUB • Premium Gaming Experience
+</footer>
+
+</body>
+</html>
