@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub | Pricing</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:radial-gradient(circle at top,#1a0033,#0a0014);
+    color:white;
+}
+
+/* HEADER */
+
+header{
+    background:rgba(18,0,34,.9);
+    border-bottom:1px solid #2a004d;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#c77dff;
+    letter-spacing:2px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#c77dff;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:60px;
+    color:#c77dff;
+    margin-bottom:15px;
+    text-shadow:0 0 25px rgba(199,125,255,.4);
+}
+
+.hero p{
+    opacity:.8;
+    max-width:800px;
+    margin:auto;
+}
+
+/* PRICING */
+
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(199,125,255,.15);
+    border-radius:20px;
+    padding:30px;
+    margin-bottom:25px;
+    transition:.3s;
+}
+
+.card:hover{
+    border-color:#c77dff;
+    box-shadow:0 0 25px rgba(199,125,255,.2);
+}
+
+.card h2{
+    color:#c77dff;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+.time{
+    color:#c77dff;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:10px;
+}
+
+.price{
+    padding:8px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.highlight{
+    margin-top:15px;
+    background:#7b2cbf;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:25px;
+    margin-top:40px;
+    border-top:1px solid #2a004d;
+    opacity:.7;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:42px;
+}
+
+nav{
+    display:none;
+}
+
+.card{
+    padding:20px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">GAME HUB</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="rooms.html">Rooms</a>
+<a href="games.html">Games</a>
+<a href="tournaments.html">Tournaments</a>
+<a href="pricing.html">Pricing</a>
+</nav>
+
+</header>
+
+<section class="hero">
+<h1>PRICING</h1>
+<p>
+Choose the gaming experience that suits you best. From casual gaming sessions to premium VIP rooms, Game Hub offers options for every player.
+</p>
+</section>
+
+<div class="container">
+
+<!-- STANDARD -->
+
+<div class="card">
+<h2>🎮 Standard PC</h2>
+
+<div class="time">04:00 - 16:00</div>
+<div class="price">1 Hour — 500 AMD</div>
+<div class="price">3 Hours — 1200 AMD</div>
+<div class="price">5 Hours — 1800 AMD</div>
+
+<div class="time">16:00 - 04:00</div>
+<div class="price">1 Hour — 700 AMD</div>
+<div class="price">3 Hours — 1800 AMD</div>
+<div class="price">5 Hours — 2600 AMD</div>
+
+<div class="highlight">
+Night Package (23:00 - 09:00) — 3000 AMD
+</div>
+</div>
+
+<!-- COMFORT -->
+
+<div class="card">
+<h2>💺 Comfort PC</h2>
+
+<div class="time">04:00 - 16:00</div>
+<div class="price">1 Hour — 700 AMD</div>
+<div class="price">3 Hours — 1700 AMD</div>
+<div class="price">5 Hours — 2700 AMD</div>
+
+<div class="time">16:00 - 04:00</div>
+<div class="price">1 Hour — 900 AMD</div>
+<div class="price">3 Hours — 2000 AMD</div>
+<div class="price">5 Hours — 3000 AMD</div>
+
+<div class="highlight">
+Night Package (23:00 - 09:00) — 4000 AMD
+</div>
+</div>
+
+<!-- VIP PC -->
+
+<div class="card">
+<h2>🔥 VIP PC</h2>
+
+<div class="time">04:00 - 16:00</div>
+<div class="price">1 Hour — 900 AMD</div>
+<div class="price">3 Hours — 2000 AMD</div>
+<div class="price">5 Hours — 3500 AMD</div>
+
+<div class="time">16:00 - 04:00</div>
+<div class="price">1 Hour — 1100 AMD</div>
+<div class="price">3 Hours — 2700 AMD</div>
+<div class="price">5 Hours — 4400 AMD</div>
+
+<div class="highlight">
+Night Package (23:00 - 09:00) — 5000 AMD
+</div>
+</div>
+
+<!-- STREAM -->
+
+<div class="card">
+<h2>🎥 VIP Stream Room</h2>
+
+<div class="price">1 Hour — 3000 AMD</div>
+<div class="price">4+ Hours — 2500 AMD / hour</div>
+
+</div>
+
+<!-- CINEMA -->
+
+<div class="card">
+<h2>🎬 VIP Cinema Room</h2>
+
+<div class="price">1 Hour — 3000 AMD</div>
+<div class="price">4+ Hours — 2500 AMD / hour</div>
+
+</div>
+
+<!-- PS5 -->
+
+<div class="card">
+<h2>🎮 PlayStation 5</h2>
+
+<div class="price">1 Hour — 1500 AMD</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 GAME HUB • Premium Gaming Experience
+</footer>
+
+</body>
+</html>
